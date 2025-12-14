@@ -12,7 +12,7 @@ Features a floating interface, liquid physics animations, and a resource managem
 ## 🚀 How to Run
 1. Clone the repo:
    ```bash
-   git clone [https://github.com/CaSh007s/PyCoffee-Tycoon.git](https://github.com/CaSh007s/PyCoffee-Tycoon.git)
+   git clone https://github.com/CaSh007s/coffee-tycoon.git
    ```
 2. Install dependencies:
    ```bash
