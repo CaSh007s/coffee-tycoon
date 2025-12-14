@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyCoffee Tycoon</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="main-layout">
+        
+        <div class="machine">
+            <div class="display-screen" id="message-box">
+                <p>Status: Select Drink</p>
+                <h2 id="main-display">INSERT COIN</h2>
+            </div>
+
+            <div class="coin-pad">
+                <p>Current Credit: $<span id="current-credit">0.00</span></p>
+                <div class="coins">
+                    <button onclick="insertCoin(0.10)" class="coin">10¢</button>
+                    <button onclick="insertCoin(0.50)" class="coin">50¢</button>
+                    <button onclick="insertCoin(1.00)" class="coin">$1</button>
+                </div>
+                <button class="clear-btn" onclick="clearCoins()">Refund</button>
+            </div>
+
+            <div class="drink-pad">
+                {% for drink, details in menu.items() %}
+                <button class="drink-btn" onclick="order(this)" 
+                        data-drink="{{drink}}" data-cost="{{details.cost}}">
+                    <span class="drink-name">{{ drink|title }}</span>
+                    <span class="drink-price">${{ "%.2f"|format(details.cost) }}</span>
+                </button>
+                {% endfor %}
+            </div>
+
+            <div class="dispenser-area" onclick="takeCup()" title="Click to take cup">
+                <div class="nozzle"></div>
+                <div class="cup-container" id="cup-container" style="opacity: 0;"> <div class="steam" id="steam"><span></span><span></span><span></span></div>
+                    <div class="cup">
+                        <div class="liquid" id="liquid"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-column">
+            
+            <div class="dashboard">
+                <h3>Store Manager</h3>
+                <div class="revenue-display">
+                    Store Funds: $<span id="money-stat">{{ "%.2f"|format(resources.money) }}</span>
+                </div>
+
+                <div class="resource-group"><label>Water</label><div class="progress-bar"><div id="bar-water"></div></div></div>
+                <div class="resource-group"><label>Milk</label><div class="progress-bar"><div id="bar-milk"></div></div></div>
+                <div class="resource-group"><label>Beans</label><div class="progress-bar"><div id="bar-coffee"></div></div></div>
+                <div class="resource-group"><label>Choco</label><div class="progress-bar"><div id="bar-chocolate" style="background:#795548;"></div></div></div>
+            </div>
+
+            <div class="shop-panel">
+                <h3>Supplier Shop</h3>
+                <p>Buy ingredients to keep serving.</p>
+                
+                {% for item, details in shop.items() %}
+                <button class="shop-btn" onclick="buyResource('{{item}}')">
+                    Buy {{item|title}} (+{{details.amount}})
+                    <span>${{ "%.2f"|format(details.cost) }}</span>
+                </button>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
